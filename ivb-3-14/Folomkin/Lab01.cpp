@@ -1,8 +1,8 @@
 /*
-* Лаба №1
-* ИВБ-3-14
-* Фоломкин Антон
-* 15 вариант
+* Р›Р°Р±Р° в„–1
+* РР’Р‘-3-14
+* Р¤РѕР»РѕРјРєРёРЅ РђРЅС‚РѕРЅ
+* 15 РІР°СЂРёР°РЅС‚
 */
 
 #include <stdio.h>
@@ -21,12 +21,10 @@ double mt3[] = { 1.1, 5.6, 4.8, 8.2 };
 static double Calculate(double matrix[], int elements, const double part)
 {
 	double result = 0;
-	int i;
 	int n = 0;
 
-	for (int i = 0; i < elements; ++i) 
-	{
-		if (matrix[i] < part) && (matrix[i]> result {
+	for (int i = 0; i < elements; ++i) {
+		if ((matrix[i] < part) && (matrix[i]> result)) {
 			result = Matrix[i];
 			++n;
 		}
@@ -36,14 +34,14 @@ static double Calculate(double matrix[], int elements, const double part)
 
 void main(int argc, char **argv)
 {
-	setlocale(0, "");
+	setlocale(0, "Russian");
 	double s1 = Calculate(mt1, len(mt1));
 	double s2 = Calculate(mt2, len(mt2));
 	double s3 = Calculate(mt3, len(mt3));
 
 	double max_value = max(max(s1, s2), s3);
 
-	printf("Максимальное значение %0.1lf содержится в:\n", s1);
+	printf("РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ %0.1lf СЃРѕРґРµСЂР¶РёС‚СЃСЏ РІ:\n", s1);
 	if (max_value == s1)
 		printf(" mt1", s1);
 	if (max_value == s2)
