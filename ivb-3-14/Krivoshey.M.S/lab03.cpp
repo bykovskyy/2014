@@ -1,4 +1,4 @@
-a#include <cstdio>
+#include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <string>
