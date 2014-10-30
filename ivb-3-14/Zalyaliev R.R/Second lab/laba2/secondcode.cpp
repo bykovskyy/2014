@@ -248,7 +248,7 @@ __outputMaxElements(double **pMatrix, int rows, int cols)
         int count = 0;
         double accum = 0;
 	for (int i = 0; i < rows; ++i) {		
-		count=0;
+		count = 0;
 		for (int j = 0; j < cols; ++j) {
 			if (pMatrix[i][j] >= 0){
 				count++; accum += pMatrix[i][j];
