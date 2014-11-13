@@ -49,14 +49,14 @@ main(int argc, char **argv)
         __printMatrix(matrix2, mRows2, mCols2);
 
         /** Find Max element */
-        double Max1 = __findMaxElement(matrix1, mRows1, mCols1);
-        double Max2 = __findMaxElement(matrix2, mRows2, mCols2);
+        double Max1 = __findZeroElement(matrix1, mRows1, mCols1);
+        double Max2 = __findZeroElement(matrix2, mRows2, mCols2);
         if (Max1 < Max2) {
                 fprintf(stdout, "Output matrix N1:\n");
-                __outputMaxElements(matrix1, mRows1, mCols1);
+                __outputMinElements(matrix1, mRows1, mCols1);
         } else {
                 fprintf(stdout, "Output matrix N2:\n");
-                __outputMaxElements(matrix2, mRows2, mCols2);
+                __outputMinElements(matrix2, mRows2, mCols2);
 }
 
         __destroyMatrix(matrix1, mRows1, mCols1);
@@ -234,7 +234,7 @@ __printMatrix(double **pMatrix, int rows, int cols)
 }
 
 double
-__findMaxElement(double **pMatrix, int rows, int cols)
+__findZeroElement(double **pMatrix, int rows, int cols)
 {
         double result = 0;
         for (int i = 0; i < rows; ++i) {
@@ -247,7 +247,7 @@ __findMaxElement(double **pMatrix, int rows, int cols)
 }
 
 void
-__outputMaxElements(double **pMatrix, int rows, int cols)
+__outputMinElements(double **pMatrix, int rows, int cols)
 {
         for (int i = 0; i < rows; ++i) {
                 int max = 0;
