@@ -24,9 +24,9 @@ __exception(const char * const szMessage)
 static void
 __printMatrix(double **pMatrix, int rows, int cols);
 static double
-__findMaxElement(double **pMatrix, int rows, int cols);
+__findZeroElement(double **pMatrix, int rows, int cols);
 static void
-__outputMaxElements(double **pMatrix, int rows, int cols);
+__outputMinElements(double **pMatrix, int rows, int cols);
 
 int
 main(int argc, char **argv)
