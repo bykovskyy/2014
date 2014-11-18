@@ -30,7 +30,7 @@ char * Replace = "[ссылка запрещена]";
 int main(int argc, char **argv)
 {
 	setlocale(0, "Russian");
-	char * input = strdup("Текст с ссылкими. http://maps.google.com http://ya.ru/ есть большие ссылки http://eflk.ru/forum/index.php?qwery=testing и много букв вв  мннрв ов в оулу ь 59629 ** уу");
+	char * input = strdup("Текст с ссылкими. http://maps.google.com http://ya.ru/ есть большие ссылки http://eflk.ru/forum/index.php?qwery=testing");
 
 	int phrase_count = GetPhraseCount(input);
 
@@ -40,15 +40,28 @@ int main(int argc, char **argv)
 	printf_s("Оригинал:\n");
 	Print(phrases, phrase_count);
 
+	int r_len = strlen(Replace) + 1;
 	for (int i = 0; i < phrase_count; i++)
 	{
 		if(StartWith(phrases[i], Find))
-			phrases[i] = Replace;
+		{
+			delete[] phrases[i];
+			phrases[i] = new char[r_len];
+			strcpy(phrases[i], Replace);
+		}
 	}
 
 	printf_s("\nУдаление сылок:\n");
 	Print(phrases, phrase_count);
+	
+	printf_s("\n");
 
+	for (int i = 0; i < phrase_count; i++)
+	{
+		delete [] phrases[i];
+	}
+	delete [] phrases;
+	delete input;
 	return EXIT_SUCCESS;
 }
 
@@ -71,8 +84,7 @@ bool StartWith(char * str, char * find)
 
 char * GetPhrase(char * input, int offest, int length)
 {
-	char * phrase;
-	phrase = new char[length+1];
+	char * phrase = new char[length+1];
 
 	int _offest = offest-length-1;
 	for(int m=0 ; m<length; m++)
@@ -95,7 +107,7 @@ void Print(char ** buffer, int length)
 int GetPhraseCount(char * buffer)
 {
 	int i = 0;
-	int phrase_count = 0;
+	int phrase_count = 1;
 	char c;
 	do
 	{
@@ -113,7 +125,6 @@ void Split(char * input, char ** &output)
 	int i = 0;
 	int n = 0;
 	int h = 0;
-	char * phrase;
 
 	do
 	{
