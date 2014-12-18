@@ -2,15 +2,14 @@
 #include <cstdlib>
 #include <cstring>
 #include <string>
-
 /*
-	* Лаба №3
-	* ИВБ-3-14
-	* Кривошея Михаил
-	* 11 вариант
-		Дана строка, состоящая из слов, разделенных пробелами.
-		Сформировать новую строку со следующими свойствами:
-		Все ссылки в словах заменяются на ”[ссылка запрещена]”
+* Лаба №3
+* ИВБ-3-14
+* Кривошея Михаил
+* 12 вариант
+Дана строка, состоящая из слов, разделенных пробелами.
+Сформировать новую строку со следующими свойствами:
+все email заменяются на ”[контакты запрещены]”
 */
 
 //Кол-во слов
@@ -21,39 +20,38 @@ void Split(char * input, char ** &output);
 char * GetPhrase(char * input, int offest, int length);
 //Печать строки
 void Print(char ** buffer, int length);
-//Сравнить начало строки
-bool StartWith(char * str, char * find);
 
-char * Find = "http://";
-char * Replace = "[ссылка запрещена]";
+char * Replace = "[контакты запрещены]";
 
 int main(int argc, char **argv)
 {
 	setlocale(0, "Russian");
-	char * input = strdup("Текст с ссылкими. http://maps.google.com http://ya.ru/ есть большие ссылки http://eflk.ru/forum/index.php?qwery=testing");
+	char * input = strdup("Текст. test@gmail.com blablabla");
 
 	int phrase_count = GetPhraseCount(input);
-
 	char ** phrases = new char *[phrase_count];
-	Split(input, phrases);
-	
-	printf_s("Оригинал:\n");
-	Print(phrases, phrase_count);
 
+	Split(input, phrases);
+	printf_s("Оригинал:\n");
+
+	Print(phrases, phrase_count);
 	int r_len = strlen(Replace) + 1;
 	for (int i = 0; i < phrase_count; i++)
 	{
-		if(StartWith(phrases[i], Find))
+		for(int n = 0; n < strlen(phrases[i]); n++)
 		{
-			delete[] phrases[i];
-			phrases[i] = new char[r_len];
-			strcpy(phrases[i], Replace);
+			if(phrases[i][n] == '@')
+			{
+				delete[] phrases[i];
+				phrases[i] = new char[r_len];
+				strcpy(phrases[i], Replace);
+				break;
+			}
 		}
 	}
 
-	printf_s("\nУдаление сылок:\n");
+	printf_s("\nУдаление эмейлов:\n");
 	Print(phrases, phrase_count);
-	
 	printf_s("\n");
 
 	for (int i = 0; i < phrase_count; i++)
@@ -62,34 +60,17 @@ int main(int argc, char **argv)
 	}
 	delete [] phrases;
 	delete input;
+
+	system("pause");
 	return EXIT_SUCCESS;
-}
-
-bool StartWith(char * str, char * find)
-{
-	int l1 = strlen(str);
-	int l2 = strlen(find);
-
-	if(l2>l1)
-		return false;
-
-	for(int i =0;i<l2;i++)
-	{
-		if(str[i]!=find[i])
-			return false;
-	}
-
-	return true;
 }
 
 char * GetPhrase(char * input, int offest, int length)
 {
 	char * phrase = new char[length+1];
-
 	int _offest = offest-length-1;
 	for(int m=0 ; m<length; m++)
 		phrase[m] = input[_offest+m];
-
 	phrase[length] = '\0';
 	return phrase;
 }
@@ -115,7 +96,6 @@ int GetPhraseCount(char * buffer)
 		if(c==' ')
 			phrase_count++;
 	} while (c!='\0');
-
 	return phrase_count;
 }
 
@@ -125,7 +105,6 @@ void Split(char * input, char ** &output)
 	int i = 0;
 	int n = 0;
 	int h = 0;
-
 	do
 	{
 		c = input[i++];
@@ -140,6 +119,5 @@ void Split(char * input, char ** &output)
 		else
 			h++;
 	} while (c!='\0');
-
 	output[n] = GetPhrase(input, i, h-1);
 }
