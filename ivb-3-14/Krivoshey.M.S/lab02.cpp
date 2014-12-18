@@ -2,6 +2,16 @@
 #include <cstdlib>
 #include <cstring>
 
+/*
+	* Лаба №2
+	* ИВБ-3-14
+	* Кривошея Михаил
+	* 12 вариант
+		Даны две матрицы разного размера. Для той из матриц, в которой меньше
+		количество нулевых элементов, найти количество отрицательных элементов
+		в каждой строке.
+*/
+
 static double ** __loadMatrix( const char * const szFileName,  int * piRows, int * piCols);
 
 static int __exception(const char * const szMessage)
@@ -10,10 +20,9 @@ static int __exception(const char * const szMessage)
 	return EXIT_FAILURE;
 }
 
-static void __printMatrix(double **pMatrix, int rows, int cols);
-static int __calculateMxt(double **pMatrix, int rows, int cols);
-static void __calculateOut(double **pMatrix, int rows, int cols);
-static void __destroyMatrix(double **pMatrix, int rows, int cols);
+static void PrintMatrix(double **pMatrix, int rows, int cols);
+static void DestroyMatrix(double **pMatrix, int rows, int cols);
+static int GetCount(double **pMatrix, int rows, int cols, bool findZeroElement);
 
 /*=======================================================================================*/
 
@@ -22,37 +31,35 @@ int main(int argc, char **argv)
 	if (argc < 3)
 		return __exception("Not found input file");
 
-	int  mRows1 = 0;
-	int  mCols1 = 0;
-	int  mRows2 = 0;
-	int  mCols2 = 0;
+	int	 mRows1 = 0,
+		mCols1 = 0,
+		mRows2 = 0,
+		mCols2 = 0;
+
 	double ** matrix1 = __loadMatrix(argv[1], &mRows1, &mCols1);
 	double ** matrix2 = __loadMatrix(argv[2], &mRows2, &mCols2);
 
 	fprintf(stdout, "Matrix N1:\n");
-	__printMatrix(matrix1, mRows1, mCols1);
+	PrintMatrix(matrix1, mRows1, mCols1);
 	fprintf(stdout, "Matrix N2:\n");
-	__printMatrix(matrix2, mRows2, mCols2);
+	PrintMatrix(matrix2, mRows2, mCols2);
 
-	int mtx1 = __calculateMxt(matrix1, mRows1, mCols1);
-	int mtx2 = __calculateMxt(matrix2, mRows2, mCols2);
+	int zeroCount1 = GetCount(matrix1, mRows1, mCols1, true);
+	int zeroCount2 = GetCount(matrix2, mRows2, mCols2, true);
 
-	if (mtx1 < mtx2) {
-		fprintf(stdout, "Output matrix N1:\n");
-		__calculateOut(matrix1, mRows1, mCols1);
-	} else {
-		fprintf(stdout, "Output matrix N2:\n");
-		__calculateOut(matrix2, mRows2, mCols2);
-	}
+	if (zeroCount1 < zeroCount2)
+		fprintf(stdout, "Output matrix N1: %i\n", GetCount(matrix1, mRows1, mCols1, false));
+	else
+		fprintf(stdout, "Output matrix N2: %i\n", GetCount(matrix2, mRows2, mCols2, false));
 
-	__destroyMatrix(matrix1, mRows1, mCols1);
-	__destroyMatrix(matrix2, mRows2, mCols2);
+	DestroyMatrix(matrix1, mRows1, mCols1);
+	DestroyMatrix(matrix2, mRows2, mCols2);
 
 	system("pause");
 	return EXIT_SUCCESS;
 }
 
-void __printMatrix(double **pMatrix, int rows, int cols)
+void PrintMatrix(double **pMatrix, int rows, int cols)
 {
 	for (auto i = 0; i < rows; ++i) {
 		for (auto j = 0; j < cols; ++j) {
@@ -65,36 +72,20 @@ void __printMatrix(double **pMatrix, int rows, int cols)
 	fprintf(stdout, "\n");
 }
 
-int __calculateMxt(double **pMatrix, int rows, int cols)
+int GetCount(double **pMatrix, int rows, int cols, bool findZeroElement)
 {
 	int result = 0;
 	for (int i = 0; i < rows; ++i) {
 		for (int j = 0; j < cols; ++j) {
-			if (result == 0)
-				result++;
+			if(	(findZeroElement&&pMatrix[i][j] == 0)||
+				(!findZeroElement&&pMatrix[i][j] < 0))
+					result++;
 		}
 	}
 	return result;
 }
 
-void __calculateOut(double **pMatrix, int rows, int cols)
-{
-	for (int i = 0; i < rows; ++i) 
-	{
-		bool haveNegative = false;
-		for (int j = 0; j < cols; ++j)
-		{
-			if (pMatrix[i][j] < 0)
-			{
-				haveNegative = true;
-				break;
-			}
-		}
-		fprintf(stdout, haveNegative ? "has element < 0\n" : "not element < 0\n");
-	}
-}
-
-void __destroyMatrix(double **pMatrix, int rows, int cols)
+void DestroyMatrix(double **pMatrix, int rows, int cols)
 {
 	if (pMatrix != nullptr) {
 		for (int i = 0; i < rows; i++) {
