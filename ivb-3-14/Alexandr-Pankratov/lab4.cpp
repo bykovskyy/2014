@@ -1,3 +1,4 @@
+// 17 вариант
 #include <fstream>
 #include <string>
 
