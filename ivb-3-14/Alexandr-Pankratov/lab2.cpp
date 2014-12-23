@@ -1,3 +1,4 @@
+// 17 вариант
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
