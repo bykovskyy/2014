@@ -10,6 +10,12 @@
 	В строке входного файла INPUT.TXT записанно натуральное число n (n<=1000)
 	В выходной файл OUTPUT.TXT выведите сумму всех натуральных всех натуральных делителей числа n.
 */
+using namespace std;
+void 
+keep_window_open() {
+	char q;
+	cin >> q;
+}
 
 int
 main(int argc, char **argv)
@@ -39,5 +45,6 @@ main(int argc, char **argv)
 	std::ofstream Out = std::ofstream("OUTPUT.txt");
 	Out << sum;
 	Out.close();
+	keep_window_open();
 	return EXIT_SUCCESS;
 }

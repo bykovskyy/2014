@@ -1,6 +1,5 @@
 ﻿#include <iostream>
 #include <string>
-using namespace std;
 /* Лабораторная работа №3
 	* Вариант 16
 	* ИВБ-3-14
@@ -27,8 +26,8 @@ main()
 		{
 			if (str1[i] == str2[n])
 			{
-				if (!(str1[i] == ' ' && ((p > 0 && buff[p - 1] == ' ') || p == 0))) {//Жудкое условие для удаления пробелов
-					if (memory[str1[i]] < n){
+				if (!(str1[i] == ' ' && ((p > 0 && buff[p - 1] == ' ') || p == 0))) { // удаление пробелов
+					if (memory[str1[i]] < n) {
 						memory[str1[i]] = n;
 						buff[p] = str1[i];
 						p++;
@@ -42,5 +41,6 @@ main()
 	buff[p] = '\0';
 	printf("String 1:\t%s\nString 2:\t%s\nResult:\t\t%s\n", str1, str2, buff);
 	system("pause");
-	return ;
+	delete memory;
+	delete buff;
 }
